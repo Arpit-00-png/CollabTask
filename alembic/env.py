@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from sqlmodel import SQLModel
 from app.models.user import * 
+from app.models.task import *
 
 
 from alembic import context

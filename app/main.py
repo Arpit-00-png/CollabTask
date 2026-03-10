@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from app.core.config import settings
 from app.api.v1.endpoints import auth
-
-print(settings.ALGORITHM)
+from app.api.v1.endpoints import task
 
 def create_application():
     app= FastAPI()
@@ -11,7 +10,9 @@ def create_application():
 
 app=create_application()
 
-app.include_router(auth.router)
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["Auth"])
+app.include_router(task.router, prefix="/api/vi/taks", tags=["Task"])
+
 @app.get("/")
 def intro():
-    return f"hello world + {settings.ALGORITHM}"
+    return {"message":"hello world"}
