@@ -1,5 +1,5 @@
 from logging.config import fileConfig
-
+from app.core.config import settings
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 import sys
@@ -8,9 +8,7 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
 from sqlmodel import SQLModel
-from app.models.user import * 
-from app.models.task import *
-
+from app.models import User, Task, Comment, Activity
 
 from alembic import context
 
@@ -47,7 +45,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
+    url = config.get_main_option("sqlalchemy.url", settings.DATABASE_URL)
     context.configure(
         url=url,
         target_metadata=target_metadata,

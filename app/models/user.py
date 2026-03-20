@@ -6,6 +6,8 @@ from app.models.task import Task
 
 if TYPE_CHECKING : 
     from app.models.task import Task
+    from app.models.activity import Activity
+    
 
 
 class User ( SQLModel, table=True):
@@ -17,6 +19,6 @@ class User ( SQLModel, table=True):
     password: str= Field(nullable=False)
     isactive: bool = Field(default= True)
     created_at: datetime = Field(default_factory= datetime.utcnow)
-    comments: Optional["Comment"]=Relationship(back_populate="user")
-    tasks: Optional[List[Task]]=Relationship(back_populates="owner")
-
+    comments: Optional[List["Comment"]]=Relationship(back_populates="user")
+    tasks: Optional[List["Task"]]=Relationship(back_populates="owner")
+    activities: Optional[List["Activity"]]= Relationship(back_populates="user")

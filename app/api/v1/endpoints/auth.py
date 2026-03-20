@@ -9,10 +9,6 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 router=APIRouter()
 
-@router.get("/testrouter")
-def testrouter():
-    return {"message":"this router came from another file"}
-
 @router.post("/register",response_model=UserResponse)
 def register_user( user : UserCreate, db: Session=Depends(getdb)):
     if not user:

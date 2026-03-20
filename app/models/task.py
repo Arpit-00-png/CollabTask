@@ -2,10 +2,13 @@ from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
 from typing import Optional
 from pydantic import EmailStr
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, List
+
 
 if TYPE_CHECKING:
     from app.models.user import User
+    from app.models.activity import Activity
+    from app.models.comment import Comment
 
 class Task(SQLModel, table =True):
     id: int =Field(primary_key=True)
@@ -19,9 +22,10 @@ class Task(SQLModel, table =True):
     due_date : Optional[datetime]= Field(default = None)
     owner_id: int =Field(foreign_key="users.id")
     owner: Optional["User"] = Relationship(back_populates="tasks")
-    comments: Optional["Comment"]=Relationship(back_populate="task")
+    comments: Optional[List["Comment"]]=Relationship(back_populates="task")
+    activities: Optional[List["Activity"]]= Relationship(back_populates="task")
     @property
     def is_due(self):
         if not self.due_date:
-            return false;
+            return False;
         return self.due_date<datetime.utcnow()

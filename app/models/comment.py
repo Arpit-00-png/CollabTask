@@ -1,6 +1,5 @@
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
-from typing import Optional
 from typing import Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -16,5 +15,5 @@ class Comment (SQLModel , table = True):
     user_id : int = Field(foreign_key="users.id")
     task_id : int = Field(foreign_key="task.id")
 
-    task= Optional["Task"]= Relationship(back_populates="comments")
-    user=Optional["User"]= Relationship(back_populates="comment")
+    task: Optional["Task"]= Relationship(back_populates="comments")
+    user: Optional["User"]= Relationship(back_populates="comments")
